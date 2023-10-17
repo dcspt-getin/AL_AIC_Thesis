@@ -1,0 +1,50 @@
+[
+	{
+		"id" : 1,
+		"name" : "Apartments"
+	},
+	{
+		"id" : 2,
+		"name" : "Houses"
+	},
+	{
+		"id" : 3,
+		"name" : "Land"
+	},
+	{
+		"id" : 4,
+		"name" : "Stores"
+	},
+	{
+		"id" : 5,
+		"name" : "Warehouses"
+	},
+	{
+		"id" : 6,
+		"name" : "Garages"
+	},
+	{
+		"id" : 7,
+		"name" : "Offices"
+	},
+	{
+		"id" : 8,
+		"name" : "Buildings"
+	},
+	{
+		"id" : 9,
+		"name" : "Farms and Estates"
+	},
+	{
+		"id" : 10,
+		"name" : "Luxury"
+	},
+	{
+		"id" : 11,
+		"name" : "Industrial"
+	},
+	{
+		"id" : 12,
+		"name" : "N/A"
+	}
+]

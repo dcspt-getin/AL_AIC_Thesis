@@ -1,0 +1,30 @@
+[
+	{
+		"id" : 1,
+		"name" : "Internal"
+	},
+	{
+		"id" : 2,
+		"name" : "Imovirtual"
+	},
+	{
+		"id" : 3,
+		"name" : "Idealista"
+	},
+	{
+		"id" : 4,
+		"name" : "Sapo"
+	},
+	{
+		"id" : 5,
+		"name" : "C21"
+	},
+	{
+		"id" : 6,
+		"name" : "Mister"
+	},
+	{
+		"id" : 7,
+		"name" : "Casafari"
+	}
+]

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="pt"><Esri><CreaDate>20150917</CreaDate><CreaTime>19082100</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.2\ArcToolbox\Toolboxes\Data Management Tools.tbx\CalculateField" Date="20150917" Time="190821">CalculateField BGRI11_CONT Code_FR11 "[DTMN11]*100+ [FR11]" VB #</Process></lineage></DataProperties></Esri></metadata>

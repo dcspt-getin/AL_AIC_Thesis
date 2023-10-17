@@ -1,0 +1,30 @@
+[
+	{
+		"id" : 1,
+		"name" : "New"
+	},
+	{
+		"id" : 2,
+		"name" : "Used"
+	},
+	{
+		"id" : 3,
+		"name" : "Under Construction"
+	},
+	{
+		"id" : 4,
+		"name" : "To Recuperate"
+	},
+	{
+		"id" : 5,
+		"name" : "Ruin"
+	},
+	{
+		"id" : 6,
+		"name" : "Renovated"
+	},
+	{
+		"id" : 7,
+		"name" : "Under Project"
+	}
+]
