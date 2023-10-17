@@ -2,9 +2,7 @@
 Notebooks from André Lima thesis - MS in Data Science for Social Sciences
 
 ## Project Structure
-
-  AIC_Regression Folder containing:
-  
+ 
     Notebooks Folder:
         - 01_ETL_AIC.ipynb
         - 02_Clustering_AIC.ipynb
