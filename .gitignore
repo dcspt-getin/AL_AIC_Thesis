@@ -159,9 +159,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-/Data/BGRI21_CONT/BGRI21_CONT.gpkg
-/Data/BGRI_2011/BGRI2011_PT_2.csv
-/Data/BGRI_2011/CONTINENTE/BGRI11_CONT.shp
-/Data/CAOP_2022/Cont_AAD_CAOP2022.shp
-
 .DS_Store
