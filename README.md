@@ -12,4 +12,4 @@ Notebooks from André Lima thesis - MS in Data Science for Social Sciences
         - All necessary files to run the notebooks
 
 Contacts: 
-email - André Lima @ andre.lima@ua.pt 
+André Lima @ andre.lima@ua.pt 
