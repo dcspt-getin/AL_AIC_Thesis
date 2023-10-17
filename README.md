@@ -11,5 +11,5 @@ Notebooks from André Lima thesis - MS in Data Science for Social Sciences
     Data Folder:
         - All necessary files to run the notebooks
 
-Contact: andre.lima@ua.pt / +351 918 128 093
-
+Contacts: 
+email - André Lima @ andre.lima@ua.pt 
