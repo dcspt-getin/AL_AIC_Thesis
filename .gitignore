@@ -163,3 +163,5 @@ cython_debug/
 /Data/BGRI_2011/BGRI2011_PT_2.csv
 /Data/BGRI_2011/CONTINENTE/BGRI11_CONT.shp
 /Data/CAOP_2022/Cont_AAD_CAOP2022.shp
+
+.DS_Store
