@@ -1,5 +1,5 @@
 # AL_AIC_Thesis
-Notebooks from André Lima thesis - MS in Data Science for Social Sciences
+Repository for André's MS in Data Science for Social Sciences Dissertation (University of Aveiro, Portugal).
 
 ## Project Structure
  
@@ -14,4 +14,4 @@ Notebooks from André Lima thesis - MS in Data Science for Social Sciences
 On the main folder of the repository you'll find the file "requirements.txt" where you can find the needed libraries to be able to run the notebooks.
 
 Contacts: 
-André Lima @ andre.lima@ua.pt 
+André Lima @ andre.lima@ua.pt / andresilvalima@gmail.com
