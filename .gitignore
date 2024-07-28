@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 .DS_Store
+Notebooks/AIC_Data_Profile_Report_MCA.html
