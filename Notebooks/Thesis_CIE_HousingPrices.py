@@ -104,7 +104,7 @@ for name, (filename, load_func, *args) in data_files.items():
         dataframes[name] = load_func(filename)
 # endregion
 
-# region Data Loading & Preparation - Prime Yeild
+# region Data Loading & Pre-Preparation - Prime Yeild
 # Concatenate DataFrames for PY_data (Prime Yield data, post intervention)
 
 PY_data = pd.concat(
@@ -189,7 +189,7 @@ fig = px.scatter_mapbox(
 fig.show()
 # endregion
 
-# region Data Loading & Preparation - CasaSapo
+# region Data Loading & Pre-Preparation - CasaSapo
 
 # Load casasapo data
 casasapo = dataframes["casasapo_transactions"]
@@ -238,7 +238,7 @@ casasapo["Tipologia"].replace("T0+1", 1, inplace=True)
 casasapo["Tipologia"].replace("T8", 7, inplace=True)
 casasapo["Tipologia"] = casasapo["Tipologia"].astype(int)
 
-# adapt typology to casasapo classification
+# Adapt typology to casasapo classification
 PY_data["TYPOLOGY_ID"].replace(8, 7, inplace=True)
 PY_data["TYPOLOGY_ID"].replace(9, 7, inplace=True)
 PY_data["TYPOLOGY_ID"].replace(10, 7, inplace=True)
@@ -352,7 +352,7 @@ casasapo.drop(
 
 # region ETL
 
-### 4.1 Casa_Sapo Data
+#### Casa_Sapo Data
 
 casasapo_total = dataframes["casasapo_2000_2009"]
 
@@ -386,8 +386,7 @@ sns.displot(casasapo["VA1010_PrecoInicial"], bins=30, kde=True)
 # histogram  for Casasapo Log Price per square meter
 sns.displot(casasapo["VA1012_LOG_PrecoInicial_M2Area"], bins=30, kde=True)
 
-#### 4.1.1 Fix problem with Cluster_LP (label propagation problems)
-
+# Fix problem with Cluster_LP (label propagation problems)
 
 casasapo[casasapo.isnull().any(axis=1)]
 
@@ -654,9 +653,9 @@ casasapo.at[6695, "Cluster_LP"] = 155
 # )
 casasapo[casasapo.isnull().any(axis=1)]
 
-### 4.1.2 Cluster Data (based on Casa Sapo Data)
+### Cluster Data (based on Casa Sapo Data)
 
-#### 4.1.2a Initial Clusters
+#### Initial Clusters
 
 
 # df de relação entre subsecção e cluster
@@ -702,7 +701,7 @@ CLUSTER_LP.drop(
     inplace=True,
 )
 
-##### 4.1.2a.1 Correction of the Clusters
+##### Correction of the Clusters
 
 # This section is important to generate the variable u2 (that is used as u_updated in the section above).
 
@@ -847,15 +846,12 @@ gdf_PY = gdf_PY.set_crs("epsg:4326")
 # convert to EPSG:3763
 gdf_PY = gdf_PY.to_crs("epsg:3763")
 gdf_PY.plot()
-gdf_PY.shape
-AVR.crs == gdf_PY.crs
-gdf_PY.head()
-gdf_PY["CREATION_DATE"]
+
 # steps to extract the year from the date
 a = gdf_PY["CREATION_DATE"].str.split("-", n=1, expand=True)
 # steps to extract the year from the date
 a.rename(columns={0: "year", 1: "other"}, inplace=True)
-a["year"].value_counts()
+
 # transform original date to year
 gdf_PY["Year"] = a["year"]
 # drop unnecessary column
@@ -865,7 +861,7 @@ gdf_PY = gdf_PY[gdf_PY["AREA"] > 0]  # filtrar elementos com área igual a 0
 gdf_PY = gdf_PY[
     gdf_PY["AREA"] < 10000
 ]  # filtrar elementos com área igual a 0 - isto é feito mais à frente, mas trouxe para cá na elaboração do guia metodológico
-gdf_PY.shape
+
 gdf_PY["CONSTRUCTION_YEAR"] = gdf_PY["CONSTRUCTION_YEAR"].astype(
     "Int64"
 )  # converter variável ano de construção para inteiro
@@ -876,7 +872,7 @@ gdf_PY = gdf_PY[
 gdf_PY = gdf_PY[
     gdf_PY["CONSTRUCTION_YEAR"] <= (datetime.date.today().year)
 ]  # filtrar elementos com ano de construção errado (superior ao ano atual)
-gdf_PY.shape
+
 # Preparação de dados para posterior lin reg
 gdf_PY["Price_Area"] = (
     gdf_PY["CURRENT_PRICE"] / gdf_PY["AREA"]
@@ -909,7 +905,7 @@ for i, row in gdf_PY.iterrows():
     elif row["Preservacao"] > 25:
         gdf_PY.at[i, "Preservacao"] = 4
 gdf_PY["Preservacao"].value_counts()
-gdf_PY.shape
+
 # convert to integer
 gdf_PY["ID"] = gdf_PY["ID"].astype("Int64")
 gdf_PY["CONDITION_ID"] = gdf_PY["CONDITION_ID"].astype("Int64")
@@ -919,30 +915,30 @@ gdf_PY["TYPOLOGY_ID"] = gdf_PY["TYPOLOGY_ID"].astype("Int64")
 gdf_PY["CONSTRUCTION_YEAR"].unique()
 # drop unnecessary columns
 gdf_PY.drop(["CONSTRUCTION_YEAR"], axis=1, inplace=True)
-gdf_PY.shape
+
 gdf_PY.nsmallest(
     5, ["CURRENT_PRICE"]
 )  # há um valor que não faz sentido (400€) - será filtrado
 gdf_PY = gdf_PY[
     gdf_PY["CURRENT_PRICE"] > 1000
 ]  # filtrar elementos com preço inferior a 1000€
-gdf_PY.shape
+
 gdf_PY.nsmallest(5, ["CURRENT_PRICE"])  # OK
 gdf_PY.nsmallest(5, ["AREA"])
 gdf_PY = gdf_PY[gdf_PY["AREA"] > 20]  # filtrar elementos com area inferior a 20m2
-gdf_PY.shape
+
 gdf_PY.nlargest(5, ["AREA"])
-gdf_PY.shape
+
 # drop unnecessary column
 gdf_PY.drop(["CONDITION_ID"], axis=1, inplace=True)
 gdf_PY["TYPE_ID"].unique()  # OK, será variável dummy
 gdf_PY["TYPOLOGY_ID"].unique()  # OK
-gdf_PY.shape
+
 # spatial join between the geodataframe with the PY data and the geodataframe with the cluster info
 PY = gpd.sjoin(
     gdf_PY, CLUSTER_LP[["Cluster_LP", "geometry"]], how="left", predicate="intersects"
 )
-PY.shape
+
 PY["Cluster_LP"] = PY["Cluster_LP"].astype("Int64")
 PY["Cluster_LP"].value_counts()
 # histogram  for Log_Price_Area
@@ -954,9 +950,7 @@ cx.add_basemap(ax, crs=PY.crs, source=cx.providers.OpenStreetMap.Mapnik)
 # filter out elements outside the study area
 PY = PY[~PY["Cluster_LP"].isnull()]
 # filtrar elementos fora da região em estudo
-PY.shape
-PY.head()
-PY.shape
+
 ax = PY.plot()
 cx.add_basemap(ax, crs=PY.crs, source=cx.providers.OpenStreetMap.Mapnik)
 ### 4.1.4 Aggregation of Socioeconomic Indicators to the Datasets
@@ -966,35 +960,29 @@ cx.add_basemap(ax, crs=PY.crs, source=cx.providers.OpenStreetMap.Mapnik)
 PT_BGRI = pd.read_table(
     "Data/BGRI_2011/BGRI2011_PT_corrigido.csv", sep=",", encoding="latin1"
 )
-PT_BGRI.shape
+
 # subset of BGRI11, with only subsec entries
 PT_BGRI = PT_BGRI.loc[PT_BGRI["NIVEL"] == 8]
-PT_BGRI.shape
 PT_BGRI["GEO_COD"]
-list(PT_BGRI.columns)
-AVR.shape
+
 # convert Cluster variable to integer
 AVR["Cluster_LP"] = AVR["Cluster_LP"].astype("Int64")
-AVR["Cluster_LP"].unique()
-AVR.head()
+
 AVR.reset_index(drop=True, inplace=True)
 PT_BGRI.reset_index(drop=True, inplace=True)
-PT_BGRI.shape
+
 # drop unnecessary columns
 PT_BGRI.drop(["Unnamed: 0", "GEO_COD_DSG", "NIVEL", "NIVEL_DSG"], axis=1, inplace=True)
-PT_BGRI.shape
-PT_BGRI.head()
+
 # convert variables to integer prior to merge
 AVR["BGRI11"] = AVR["BGRI11"].astype(int)
 PT_BGRI["GEO_COD"] = PT_BGRI["GEO_COD"].astype(int)
 # include the BGRI socioeconomic indicators in the geodataframe
 BGRI_CLUSTER = PT_BGRI.merge(AVR, left_on="GEO_COD", right_on="BGRI11")
-BGRI_CLUSTER.shape
-BGRI_CLUSTER.head()
+
 # drop unnecessary columns
 BGRI_CLUSTER.drop(["OBJECTID", "DTMN11", "SEC11", "SS11"], axis=1, inplace=True)
-BGRI_CLUSTER
-BGRI_CLUSTER.shape
+
 BGRI_CLUSTER.reset_index(drop=True, inplace=True)
 # rename columns
 BGRI_CLUSTER.rename(
@@ -1015,9 +1003,7 @@ BGRI_CLUSTER["N_IND_RESID_TRAB_MUN_RESID"] = BGRI_CLUSTER[
     "N_IND_RESID_TRAB_MUN_RESID"
 ].astype("Int64")
 # this dataframe BGRI_CLUSTER has the BGRI11 and the cluster coding, so now we can bring the inddicators to the datasets with housing prices and transactions
-BGRI_CLUSTER.head()
-len(BGRI_CLUSTER["GEO_COD"].unique())
-BGRI_CLUSTER.shape
+
 ### 4.1.5 Aggregation of Tourism Indicators to the Datasets
 
 #### 4.1.5a Explore AL Data and prepare for merging
@@ -1050,30 +1036,28 @@ gdf_al.drop(["X", "Y"], axis=1, inplace=True)
 gdf_al.plot()
 #### 4.1.5b Merge Info into the Datasets
 
-gdf_al.crs == CLUSTER_LP.crs
 # intersect the geodataframes to bring Cluster info to the AL dataset
 gdf_al = gpd.sjoin(
     gdf_al, CLUSTER_LP[["Cluster_LP", "geometry"]], how="left", predicate="intersects"
 )
-gdf_al.shape
+
 # filter out AL that are not inside a cluster
 gdf_al = gdf_al[gdf_al["Cluster_LP"].notnull()]
-gdf_al.shape
+
 BGRI_CLUSTER["N_INDIVIDUOS_RESIDENT"].describe()
 # get a sum of the number of residents in 2011
 a = BGRI_CLUSTER["N_INDIVIDUOS_RESIDENT"].sum()
-a
+
 fiona.listlayers("Data/BGRI21_CONT/BGRI21_CONT.gpkg")
 # load BGRI 2021 data
 BGRI_2021 = gpd.read_file("Data/BGRI21_CONT/BGRI21_CONT.gpkg", layer="BGRI21_CONT")
-BGRI_2021.columns
-BGRI_2021.head()
+
 BGRI_2021_AVRILH = BGRI_2021.clip(AVR)
 BGRI_2021_AVRILH.plot()
 BGRI_2021_AVRILH["N_INDIVIDUOS"].describe()
 # get a sum of the number of residents in 2021
 a = BGRI_2021_AVRILH["N_INDIVIDUOS"].sum()
-a
+
 BGRI_2021_AVRILH_C = BGRI_2021_AVRILH.copy()
 # calculate centroids
 BGRI_2021_AVRILH_C["centroid"] = BGRI_2021_AVRILH_C.centroid
@@ -1089,16 +1073,15 @@ AVRILH_CLUSTERS_2 = gpd.sjoin(
     predicate="intersects",
 )
 AVRILH_CLUSTERS_2.head()
-AVRILH_CLUSTERS_2.shape
+
 # drop unnecessary columns
 AVRILH_CLUSTERS_2.drop(["geometry", "index_right"], axis=1, inplace=True)
 # make geometry2, geometry again
 AVRILH_CLUSTERS_2.rename(columns={"geometry2": "geometry"}, inplace=True)
-AVRILH_CLUSTERS_2.shape
+
 # remove data points not inside a cluster
 AVRILH_CLUSTERS_2 = AVRILH_CLUSTERS_2[AVRILH_CLUSTERS_2["Cluster_LP"].notnull()]
-AVRILH_CLUSTERS_2.shape
-AVRILH_CLUSTERS_2.head()
+
 len(AVRILH_CLUSTERS_2["BGRI2021"].unique())
 # convert to int the date
 gdf_al["DataAberturaPublico"] = gdf_al["DataAberturaPublico"].astype(int)
