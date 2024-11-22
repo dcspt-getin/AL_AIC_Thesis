@@ -11,7 +11,7 @@ Repository for André's MS in Data Science for Social Sciences Dissertation (Uni
     Data Folder:
         - All necessary files to run the notebooks
 
-On the main folder of the repository you'll find the files "requirements.txt" and "requirements.yml" where you can find the needed libraries to be able to run the notebooks.
+On the main folder of the repository you'll find the "requirements.txt" and "requirements.yaml" necessary to setup the environment to run the notebooks successfully.
 
 Contacts: 
 André Lima @ andre.lima@ua.pt / andresilvalima@gmail.com
